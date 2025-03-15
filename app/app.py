@@ -1,16 +1,18 @@
 import logging
+import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
 from app.core.config import get_settings
+from app.core.logging import logger
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logging.info(f"Starting {get_settings().PROJECT_NAME}-{get_settings().ENVIRONMENT}-{get_settings().PROJECT_VERSION}.")
+    logger.info(f"Starting {get_settings().PROJECT_NAME}-{get_settings().ENVIRONMENT}-{get_settings().PROJECT_VERSION}.")
     yield
-    logging.info(f"Shutting down {get_settings().PROJECT_NAME}-{get_settings().ENVIRONMENT}-{get_settings().PROJECT_VERSION}.")
+    logger.info(f"Shutting down {get_settings().PROJECT_NAME}-{get_settings().ENVIRONMENT}-{get_settings().PROJECT_VERSION}.")
 
 def create_application() -> FastAPI:
     application = FastAPI(
